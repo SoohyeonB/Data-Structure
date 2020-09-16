@@ -1,0 +1,28 @@
+#pragma once
+#include<stdio.h>
+class HomeWork2
+{
+#define ROWS 3
+#define COLS 3
+#define MAX_TERMS 10
+	typedef struct {
+		int row;
+		int col;
+		int value;
+	} element;
+	typedef struct SparseMatrix {
+		element data[MAX_TERMS];
+		int rows; // row number
+		int cols; // column number
+		int terms; // element number
+	} SparseMatrix;
+
+
+	void main() {
+		//Add B as an input. Use your own example freely.
+		SparseMatrix B = {.rows=7, .cols=3, .terms=};
+
+	}
+
+};
+
