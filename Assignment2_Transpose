@@ -10,6 +10,7 @@ class HomeWork2
 		int col;
 		int value;
 	} element;
+
 	typedef struct SparseMatrix {
 		element data[MAX_TERMS];
 		int rows; // row number
@@ -20,8 +21,57 @@ class HomeWork2
 
 	void main() {
 		//Add B as an input. Use your own example freely.
-		SparseMatrix B = {.rows=7, .cols=3, .terms=};
+		SparseMatrix B = { {{0,3,7},   //원래 행렬인 B생성 및 초기화
+							{1,0,9},
+							{1,5,8},
+							{3,0,6},
+							{3,1,5},
+							{4,5,1},
+							{5,2,2}},6,6,7 };
 
+		//Perform the transpose operation
+		SparseMatrix B_T = transpose(B);  //B_T에 B를 transpose해서 넣음
+
+	   //Print out B and B^T in a dense matrix from to check whether the operation works correctly.
+
+		int original[6][6] = { 0, }; //B출력에 사용될 배열 모든 value0으로 초기화
+		for (int k = 0; k < B.terms; k++) {
+			if (B.data[k].value != 0) { //B중 0이 아닌 값은
+				original[B.data[k].row][B.data[k].col] = B.data[k].value; //original 배열에 저장
+			}
+		}
+		for (int i = 0; i < B.rows; i++) { //original 배열 출력
+			for (int j = 0; j < B.cols; j++) {
+				printf("%d ", original[i][j]);
+			}
+			printf("\n");
+		}
+
+		printf("------------------------------");
+
+		int transposed[6][6] = { 0, }; //B_T 출력에 사용될 배열 0으로 초기화
+		for (int k = 0; k < B_T.terms; k++) { //B_T중 0이 아닌 값은
+			if (B_T.data[k].value != 0) {
+				transposed[B_T.data[k].row][B_T.data[k].col] = B_T.data[k].value; //transposed 배열에 저장
+			}
+		}
+		//transposed 출력
+		for (int i = 0; i < B_T.rows; i++) {
+			for (int j = 0; j < B_T.cols; j++) {
+				printf("%d ", transposed[i][j]);
+			}
+			printf("\n");
+		}
+
+	}
+
+	SparseMatrix transpose(SparseMatrix A) {
+		for (int i = 0; i < A.terms; i++) {
+			int tmp = A.data[i].row;
+			A.data[i].row = A.data[i].col;
+			A.data[i].col = tmp;
+		}
+		return A;
 	}
 
 };
