@@ -1,10 +1,8 @@
-#pragma once
 #include<stdio.h>
-class HomeWork2
-{
-#define ROWS 3
-#define COLS 3
+#define ROWS 6
+#define COLS 6
 #define MAX_TERMS 10
+
 	typedef struct {
 		int row;
 		int col;
@@ -18,6 +16,30 @@ class HomeWork2
 		int terms; // element number
 	} SparseMatrix;
 
+	SparseMatrix transpose(SparseMatrix A) {
+		for (int i = 0; i < A.terms; i++) {
+			int tmp = A.data[i].row;
+			A.data[i].row = A.data[i].col;
+			A.data[i].col = tmp;
+		}
+		return A;
+	}
+
+	void printOut(SparseMatrix B) {
+		int original[6][6] = { 0, }; //B출력에 사용될 배열 모든 value0으로 초기화
+		for (int k = 0; k < B.terms; k++) {
+			if (B.data[k].value != 0) { //B중 0이 아닌 값은
+				original[B.data[k].row][B.data[k].col] = B.data[k].value; //original 배열에 저장
+			}
+		}
+		for (int i = 0; i < B.rows; i++) {
+			for (int j = 0; j < B.cols; j++) {
+				printf("%d ", original[i][j]);
+			}
+			printf("\n");
+		}
+		printf("------------------------------\n");
+	}
 
 	void main() {
 		//Add B as an input. Use your own example freely.
@@ -34,45 +56,12 @@ class HomeWork2
 
 	   //Print out B and B^T in a dense matrix from to check whether the operation works correctly.
 
-		int original[6][6] = { 0, }; //B출력에 사용될 배열 모든 value0으로 초기화
-		for (int k = 0; k < B.terms; k++) {
-			if (B.data[k].value != 0) { //B중 0이 아닌 값은
-				original[B.data[k].row][B.data[k].col] = B.data[k].value; //original 배열에 저장
-			}
-		}
-		for (int i = 0; i < B.rows; i++) { //original 배열 출력
-			for (int j = 0; j < B.cols; j++) {
-				printf("%d ", original[i][j]);
-			}
-			printf("\n");
-		}
+		printOut(B);
+		printOut(B_T);
 
-		printf("------------------------------");
-
-		int transposed[6][6] = { 0, }; //B_T 출력에 사용될 배열 0으로 초기화
-		for (int k = 0; k < B_T.terms; k++) { //B_T중 0이 아닌 값은
-			if (B_T.data[k].value != 0) {
-				transposed[B_T.data[k].row][B_T.data[k].col] = B_T.data[k].value; //transposed 배열에 저장
-			}
-		}
-		//transposed 출력
-		for (int i = 0; i < B_T.rows; i++) {
-			for (int j = 0; j < B_T.cols; j++) {
-				printf("%d ", transposed[i][j]);
-			}
-			printf("\n");
-		}
 
 	}
+	
 
-	SparseMatrix transpose(SparseMatrix A) {
-		for (int i = 0; i < A.terms; i++) {
-			int tmp = A.data[i].row;
-			A.data[i].row = A.data[i].col;
-			A.data[i].col = tmp;
-		}
-		return A;
-	}
 
-};
 
