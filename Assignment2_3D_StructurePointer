@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+double*** fillArray(double*** arr, int depth, int row, int col) {
+	//3D배열 채우기
+
+	for (int i = 0; i < depth; i++) {
+		for (int j = 0; j < row; j++) {
+			for (int k = 0; k < col; k++) {
+				arr[i][j][k] = rand()*100;
+			}
+		}
+	}
+	return arr;
+}
+
+//높이3, 세로4, 가로5의 3D array를 만드는 함수
+double*** mem_alloc_3D_double(int depth, int row, int col) {
+	//배열만들기
+	double ***arr = (double***)malloc(sizeof(double**) * depth);
+
+	for (int i = 0; i<depth; i++) {
+		arr[i] = (double**)malloc(sizeof(double*) * row);
+		for (int j = 0; j<4; j++) {
+			arr[i][j] = (double*)malloc(sizeof(double) * col);
+		}
+	}
+	return fillArray(arr, depth, row, col);
+}
+
+//주어진 A를 출력하는 함수
+void printOut(double*** arr, int depth, int row, int col) {
+	
+	for (int i = 0; i < depth; i++) {
+		for (int j = 0; j < row; j++) {
+			for (int k = 0; k < col; k++) {
+				printf("%.4lf ", arr[i][j][k]);
+			}
+			printf("/");
+		}
+		printf("\n");
+	}
+}
+// A와 B 더해서 C에 넣는 함수
+void addition_3D(double ***A, double ***B, double ***C) {
+	for (int depth = 0; depth < 3; depth++) {
+		for (int row = 0; row < 4; row++) {
+			for (int col = 0; col < 5; col++) {
+				C[depth][row][col] = A[depth][row][col] + B[depth][row][col];
+			}
+		}
+	}
+
+	
+}
+
+	void main() {
+	//Define two matrices A and B using 'mem_alloc_3D_double';
+		double*** A = mem_alloc_3D_double(3,4,5); 
+		double*** B = mem_alloc_3D_double(3,4,5);
+		double*** C = mem_alloc_3D_double(3,4,5);
+
+		printf("A출력\n");
+		printOut(A,3,4,5);
+		printf("B출력\n");
+		printOut(B,3,4,5);
+		
+	//Perform addition of two matrices using 'addition_3D()'
+		
+		addition_3D(A,B,C);
+		printf("C출력\n");
+		printOut(C,3,4,5);
+
+	//Deallocate A and B
+		free(A);
+		free(B);
+	}
+	
+
+
